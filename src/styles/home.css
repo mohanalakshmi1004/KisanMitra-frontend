@@ -1,0 +1,492 @@
+/* ============================================================
+   HOME PAGE - FINAL REFINED UI (TOP MOVE & CIRCLE FIX)
+   ============================================================ */
+
+/* 1. GLOBAL RESET */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+header + section, 
+nav + div,
+.navbar + .hero-section {
+  margin-top: 0 !important;
+}
+
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+  background-color: #f0fdf4;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.home-super-wrapper {
+  background-color: #f0fdf4;
+}
+
+/* 2. HERO SECTION (FARMER BACKGROUND) */
+.hero-section {
+  width: 100vw !important;
+  min-height: 500px !important; /* ఇమేజ్ కనిపించడానికి కనీసం ఇంత హైట్ ఉండాలి */
+  height: auto !important;
+  background-size: cover !important; /* ఇమేజ్ స్క్రీన్ మొత్తం ఫిట్ అవ్వడానికి */
+  background-position: top center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: scroll !important;
+  background-color: transparent !important;
+  position: relative !important;
+  z-index: 1 !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  display: flex;
+  flex-direction: column;
+  /* ఒకవేళ ఇమేజ్ పైన గ్యాప్ ఉంటే ఇది సెట్ చేయండి */
+  vertical-align: top;
+}
+
+.sky-text {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 5;
+  text-align: left;
+  width: auto;
+  max-width: 440px;
+}
+
+.sky-text h1 {
+  font-size: 2.8rem;
+  color: #1b5e20;
+  font-weight: 900;
+  text-shadow: 0 2px 15px rgba(255, 255, 255, 0.8);
+}
+
+.hero-content-box {
+  position: relative;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* 3. WEATHER WIDGET (CORNER PRECISION) */
+.weather-extreme-lock {
+  position: fixed;
+  right: 15px;  /* moved slightly left from the right edge */
+  bottom: 15px;
+  z-index: 10050;
+  pointer-events: auto;
+  max-width: 220px;
+  width: min(280px, 90vw);
+}
+
+.weather-glass-card {
+  background: rgba(20, 70, 25, 0.95); 
+  backdrop-filter: blur(8px);
+  
+  /* సైజు తగ్గింపు (ముఖ్యమైన మార్పులు) */
+  width: 200px;           /* వెడల్పు 260px నుండి 200px కి తగ్గించాను */
+  min-height: 180px;      /* హైట్ తగ్గించాను */
+  padding: 12px 15px;     /* లోపల గ్యాప్ తగ్గించాను */
+  border-radius: 18px;    /* రౌండ్ కార్నర్స్ కొంచెం తగ్గించాను */
+  
+  /* అలైన్‌మెంట్ మరియు ఫాంట్ */
+  color: white;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  
+  /* టెక్స్ట్ బయటకు రాకుండా */
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.weather-glass-card * {
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+  white-space: normal !important;
+}
+
+.temp-large {
+  font-size: clamp(1.4rem, 3.8vw, 2.4rem);
+  font-weight: 900;
+  line-height: 1.05;
+  margin: 10px 0;
+  max-height: 4.2rem;
+}
+
+.city-small, .live-tag {
+  font-size: clamp(0.75rem, 2vw, 1rem);
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 2.2rem;
+  margin-bottom: 10px;
+}
+
+.weather-view-btn {
+  display: block;
+  background: #ffffff;
+  color: #1b5e20;
+  padding: 8px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 800;
+  margin-top: 10px;
+  transition: 0.3s;
+  white-space: normal;
+  word-break: break-word;
+  min-height: 48px;
+}
+
+.weather-view-btn:hover {
+  background: #e8f5e9;
+  transform: translateY(-2px);
+}
+
+.weather-glass-card,
+.weather-glass-card * {
+  word-break: break-word;
+  white-space: normal;
+}
+
+.weather-glass-card .temp-large,
+.weather-glass-card .city-small,
+.weather-glass-card .live-tag,
+.weather-glass-card .weather-view-btn {
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+  max-width: 100%;
+}
+
+/* Keep weather card content inside box during large translation strings */
+.weather-glass-card {
+  width: min(260px, 100%);
+  max-width: 290px;
+}
+
+.weather-glass-card .temp-large {
+  font-size: clamp(1.2rem, 3.6vw, 2.1rem) !important;
+}
+
+/* 4. DASHBOARD - TOP MOVE FIX */
+.dashboard-grid-container {
+  width: 100%;
+  background-color: transparent;
+  padding: 20px 8% 40px 8% !important; 
+  margin-top: 0 !important;
+  position: relative;
+  z-index: 20;
+}
+
+.dashboard-title-main {
+  font-size: 2.8rem;
+  color: #1b5e20;
+  font-weight: 900;
+  text-align: center;
+  margin: 0px 0 50px 0 !important; 
+  letter-spacing: -1px;
+}
+
+.dashboard-3-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 30px;
+  max-width: 1250px;
+  margin: 0 auto;
+  align-items: stretch;
+  grid-auto-rows: auto;
+}
+
+/* 5. PREMIUM GREEN CARDS */
+.premium-tool-card {
+  background: white;
+  border-radius: 35px;
+  overflow: hidden;
+  padding: 30px 25px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.4s ease;
+  border: 1px solid #eef3ee;
+  position: relative;
+  height: 100%;
+  min-height: 340px;
+}
+
+.premium-tool-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 50px rgba(46, 125, 50, 0.15);
+  border-color: #2e7d32;
+}
+
+.card-color-bar {
+  display: none;
+}
+
+.icon-frame {
+  width: 110px !important;
+  height: 110px !important;
+  min-width: 110px !important;
+  min-height: 110px !important;
+  border-radius: 50% !important; 
+  border: 4px solid #2e7d32 !important; 
+  overflow: hidden;
+  margin-bottom: 20px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+}
+
+.tool-info {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.tool-info h3 {
+  font-size: 1.3rem;
+  color: #333;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.tool-info p {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  flex-grow: 1;
+  word-break: break-word;
+  white-space: normal;
+}
+
+.tool-go-btn {
+  background-color: #2e7d32;
+  color: white;
+  padding: 12px 0;
+  width: 100%;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  transition: 0.3s;
+  display: block;
+}
+
+.tool-go-btn:hover {
+  background-color: #1b5e20;
+}
+
+/* 6. RESPONSIVE */
+@media (max-width: 1024px) {
+  .dashboard-3-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 650px) {
+  .dashboard-3-grid { grid-template-columns: 1fr; }
+  .sky-text h1 { font-size: 2.2rem; }
+}
+
+/* --- ABOUT / INFO SECTION --- */
+.about-info-section {
+  background-color: transparent;
+  padding: 40px 20px;
+  text-align: center;
+  margin-top: 20px;
+  /* EDGE TO EDGE TRICK */
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  box-sizing: border-box;
+}
+
+.about-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.about-text h2 {
+  color: #166534;
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  font-weight: 800;
+}
+
+.about-text p {
+  color: #475569;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto 25px auto;
+}
+
+.stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.stat-item h3 {
+  color: #15803d;
+  font-size: 2.5rem;
+  margin: 0;
+  font-weight: 900;
+}
+header {
+  line-height: 0; /* ఎక్స్‌ట్రా స్పేస్ రాకుండా చేస్తుంది */
+}
+.stat-item p {
+  color: #64748b;
+  margin-top: 5px;
+  font-weight: 600;
+}
+
+.site-footer {
+  width: 100%;
+  background-color: #2e7d32;
+  padding: 8px 0;
+  text-align: center;
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.site-footer p {
+  margin: 0;
+  color: #f4fff2;
+  font-size: 0.95rem;
+  line-height: 1.1;
+}
+
+.footer-bottom {
+  padding-top: 0;
+  border-top: none;
+  width: 100%;
+}
+
+
+/* --- FOOTER SECTION --- */
+.home-footer {
+  background-color: #14532d; 
+  color: white;
+  padding: 60px 20px 20px 20px;
+  /* EDGE TO EDGE TRICK */
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  box-sizing: border-box;
+}
+
+.footer-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.5fr; /* Gave more room to contact info */
+  gap: 40px;
+  padding-bottom: 40px;
+}
+
+.footer-brand h2 {
+  margin: 0 0 15px 0;
+  color: #bbf7d0;
+  font-weight: 800;
+  font-size: 1.8rem;
+}
+
+.footer-brand p {
+  color: #cbd5e1;
+  line-height: 1.6;
+  max-width: 300px;
+}
+
+.footer-links h4,
+.footer-contact h4 {
+  color: white;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 15px;
+}
+
+.footer-links a {
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #bbf7d0;
+}
+
+.footer-contact p {
+  color: #cbd5e1;
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 8px;
+  border-top: none;
+  max-width: 1100px;
+  margin: 0 auto;
+  color: #f4fff2;
+  font-size: 0.9rem;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    text-align: left;
+    gap: 30px;
+  }
+}
+
+/* ఒకవేళ బ్రౌజర్ డీఫాల్ట్ మార్జిన్ ఉంటే తీసేయడానికి */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

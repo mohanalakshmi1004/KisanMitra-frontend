@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Nanna-Farmer: Empowering Farmers with AI Technology" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <title>Nanna-Farmer</title>
+
+    <script type="text/javascript">
+      if (typeof Node !== 'undefined' && Node.prototype) {
+        const originalInsertBefore = Node.prototype.insertBefore;
+        Node.prototype.insertBefore = function (newNode, referenceNode) {
+          if (referenceNode && referenceNode.parentNode !== this) {
+            console.warn('Google Translate conflict prevented on insertBefore!');
+            return originalInsertBefore.call(this, newNode, null);
+          }
+          return originalInsertBefore.call(this, newNode, referenceNode);
+        };
+
+       
+        const originalRemoveChild = Node.prototype.removeChild;
+        Node.prototype.removeChild = function (child) {
+          if (child.parentNode !== this) {
+            console.warn('Google Translate conflict prevented on removeChild!');
+            return child;
+          }
+          return originalRemoveChild.call(this, child);
+        };
+      }
+    </script>
+
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+          pageLanguage: 'en',
+          includedLanguages: 'en,te,hi,ta,kn,ml,mr',
+          layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+          autoDisplay: false
+        }, 'google_translate_element');
+      }
+    </script>
+
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <style>
+      
+      .goog-te-banner-frame.skiptranslate, 
+      .goog-te-banner-frame { display: none !important; }
+      
+      body { top: 0px !important; }
+      
+     
+      .goog-logo-link { display: none !important; }
+      .goog-te-gadget { color: transparent !important; font-size: 0px !important; }
+      .goog-te-gadget .goog-te-combo { color: black !important; font-size: 14px !important; border-radius: 5px; padding: 2px; }
+
+     
+      .goog-text-highlight { background: none !important; box-shadow: none !important; }
+    </style>
+  </head>
+  
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    
+    <div id="root"></div>
+
+  </body>
+</html>

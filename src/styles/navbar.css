@@ -1,0 +1,79 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2e7d32;
+  padding: 15px;
+  color: white;
+  margin-bottom: 0 !important; /* బాటమ్ మార్జిన్ సున్నా చేయాలి */
+  box-shadow: none !important;  /* ఒకవేళ షాడో వల్ల గ్యాప్ వస్తుంటే ఇది తీసేస్తుంది */
+  border-bottom: none !important;
+
+}
+.navbar, .main-navbar {
+  margin-bottom: 0 !important;
+  box-shadow: none !important;  /* ఈ షాడో వల్లే తెల్లగా కనిపిస్తుంది */
+  border: none !important;
+  display: flex; 
+  position: relative;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 22px;
+}
+
+.links a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+/* Google Translate dropdown ని చిన్నగా మరియు నీట్ గా మార్చడం */
+#google_translate_element select {
+  background: transparent !important;
+  color: #166534 !important;
+  border: none !important;
+  font-weight: bold !important;
+  font-size: 13px !important;
+  cursor: pointer !important;
+  outline: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* "Powered by Google" ని పూర్తిగా తీసేయడం */
+.goog-te-gadget {
+  font-size: 0px !important;
+  color: transparent !important;
+}
+
+.goog-logo-link, .goog-te-gadget span {
+  display: none !important;
+}
+
+/* పైన వచ్చే Google బ్యానర్ ని ఆపడం */
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+body {
+  top: 0px !important;
+}
+.auth-btn {
+  margin-left: 20px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: white;
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.auth-btn.signup {
+  background: #a5d6a7;
+  color: #1b5e20;
+}

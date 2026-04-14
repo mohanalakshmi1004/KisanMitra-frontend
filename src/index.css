@@ -1,0 +1,116 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2e7d32;
+  padding: 15px 5%; /* ఇరుపక్కల కొంచెం గ్యాప్ కోసం 5% ఇచ్చాను */
+  color: white;
+  width: 100%; /* ఇది కచ్చితంగా ఉండాలి, అప్పుడే Navbar ఫుల్ విడ్త్ వస్తుంది */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-sizing: border-box; /* ప్యాడింగ్ వల్ల విడ్త్ పెరగకుండా చూస్తుంది */
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+}
+
+.links a {
+  margin-left: 20px; /* లింక్స్ మధ్య గ్యాప్ */
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.links a:hover {
+  color: #a5d6a7; /* హోవర్ చేసినప్పుడు లైట్ గ్రీన్ */
+}
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  background-color: #f0fdf4 !important;
+  width: 100%;
+  height: 100%;
+}
+/* RESET (important) */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* BODY */
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  background-color: #f0fdf4 !important;
+  width: 100%;
+  height: 100%;
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2e7d32;
+  padding: 15px 5%;
+  color: white;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-sizing: border-box;
+
+  margin-bottom: 0; /* 🔥 gap remove */
+}
+
+/* LOGO */
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* LINKS */
+.links {
+  display: flex;
+  align-items: center;
+}
+
+.links a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.links a:hover {
+  color: #a5d6a7;
+}
+
+/* 🔥 HERO / IMAGE FIX (VERY IMPORTANT) */
+.hero, .banner, section {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* 🔥 IMAGE GAP REMOVE */
+img {
+  display: block;
+  width: 100%; /* optional but better */
+}
