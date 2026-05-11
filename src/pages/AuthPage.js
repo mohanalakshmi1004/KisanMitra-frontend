@@ -8,7 +8,7 @@ const AuthPage = () => {
   const [formData, setFormData] = useState({ name: '', identifier: '', password: '' });
   const navigate = useNavigate();
 
-  const API_URL = "http://localhost:5000/api/auth"; 
+  const API_URL = "https://kisanmitra-backend-9t41.onrender.com/api/auth"; 
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
