@@ -8,6 +8,13 @@ const Navbar = () => {
 
   // 🔐 టోకెన్ చెక్
   const token = localStorage.getItem('token');
+  const selectedLanguage = localStorage.getItem('nannaLanguage') || 'en';
+  const authLabels = {
+    en: { login: 'Login', signup: 'Signup' },
+    te: { login: 'లాగిన్', signup: 'సైన్ అప్' },
+    hi: { login: 'लॉगिन', signup: 'साइन अप' },
+  };
+  const authText = authLabels[selectedLanguage] || authLabels.en;
 
   // 🚪 Logout ఫంక్షన్
   const handleLogout = () => {
@@ -70,8 +77,8 @@ const Navbar = () => {
         {/* 🔐 Auth Logic */}
         {!token ? (
           <>
-            <Link to="/login" style={styles.authBtn}>Login</Link>
-            <Link to="/signup" style={{ ...styles.authBtn, background: '#bef264', color: '#166534' }}>Signup</Link>
+            <Link to="/login" style={styles.authBtn}>{authText.login}</Link>
+            <Link to="/signup" style={{ ...styles.authBtn, background: '#bef264', color: '#166534' }}>{authText.signup}</Link>
           </>
         ) : (
           <button onClick={handleLogout} style={styles.logoutBtn}>

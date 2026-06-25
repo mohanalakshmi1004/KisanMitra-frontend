@@ -6,6 +6,57 @@ import {
   ImageIcon, Home, XCircle, Send, Heart, Volume2, Plus
 } from 'lucide-react';
 
+const translations = {
+  en: {
+    communityMember: 'Community Member',
+    villagePlaceholder: 'Your village',
+    dashboard: 'Dashboard',
+    placeholder: "Hi everyone, let's discuss about farming today...",
+    shareNow: 'Share Now',
+    villageMembers: 'Village Members',
+    communityFeed: 'Community Feed',
+    localUpdate: 'Local Update',
+    comments: 'Comments',
+    deleteConfirm: 'Do you want to permanently delete this post?',
+    deleteError: 'Error deleting post!',
+    saveError: 'Error saving post!',
+    micDenied: 'Mic Permission Denied!',
+    loading: 'Loading...',
+  },
+  te: {
+    communityMember: 'కమ్యూనిటీ సభ్యుడు',
+    villagePlaceholder: 'మీ గ్రామం',
+    dashboard: 'డ్యాష్బోర్డ్',
+    placeholder: 'హాయ్ ఫ్రెండ్స్, ఈరోజు‌ రైతుల గురించి చర్చిద్దాం...',
+    shareNow: 'ఇప్పుడే షేర్ చేయండి',
+    villageMembers: 'గ్రామ సభ్యులు',
+    communityFeed: 'కమ్యూనిటీ ఫీడ్',
+    localUpdate: 'స్థానిక అప్డేట్',
+    comments: 'కమెంట్లు',
+    deleteConfirm: 'ఈ పోస్ట్‌ను శాశ్వతంగా డిలీట్ చేయాలా?',
+    deleteError: 'పోస్ట్ డిలీట్ చేయడంలో దోషం!',
+    saveError: 'పోస్ట్ సేవ్ చేయడంలో దోషం!',
+    micDenied: 'మైక్ అనుమతి నిరాకరించబడింది!',
+    loading: 'లోడ్ అవుతోంది...',
+  },
+  hi: {
+    communityMember: 'समुदाय सदस्य',
+    villagePlaceholder: 'आपका गाँव',
+    dashboard: 'डैशबोर्ड',
+    placeholder: 'नमस्ते सभी, आज खेती पर चर्चा करते हैं...',
+    shareNow: 'अभी साझा करें',
+    villageMembers: 'गाँव के सदस्य',
+    communityFeed: 'कम्युनिटी फीड',
+    localUpdate: 'स्थानीय अपडेट',
+    comments: 'टिप्पणियाँ',
+    deleteConfirm: 'क्या आप यह पोस्ट permanently delete करना चाहते हैं?',
+    deleteError: 'पोस्ट हटाने में त्रुटि!',
+    saveError: 'पोस्ट सेव करने में त्रुटि!',
+    micDenied: 'माइक की अनुमति अस्वीकार की गई!',
+    loading: 'लोड हो रहा है...',
+  },
+};
+
 const Community = () => {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
@@ -15,11 +66,13 @@ const Community = () => {
   const [posts, setPosts] = useState([]);
   const [isRecording, setIsRecording] = useState(false);
   const [audioURL, setAudioURL] = useState(null);
-  const [formData, setFormData] = useState({ text: "", village: "Thimmayyapalem", crop: "Paddy", image: null });
+  const [formData, setFormData] = useState({ text: "", village: localStorage.getItem('currentVillage') || "", crop: "Paddy", image: null });
   const [following, setFollowing] = useState([]);
   const [replyText, setReplyText] = useState({});
 
-  const currentUser = localStorage.getItem('currentUser') || '';
+  const currentUser = localStorage.getItem('currentUser') || localStorage.getItem('userName') || localStorage.getItem('userIdentifier') || 'Farmer';
+  const selectedLanguage = localStorage.getItem('nannaLanguage') || 'en';
+  const t = translations[selectedLanguage] || translations.en;
  
   const API_URL = `${process.env.REACT_APP_BACKEND_URL}/api/community/posts`;
   useEffect(() => {
@@ -77,7 +130,7 @@ const Community = () => {
         };
         mediaRecorderRef.current.start();
         setIsRecording(true);
-      } catch (err) { alert("Mic Permission Denied!"); }
+      } catch (err) { alert(t.micDenied); }
     }
   };
 
@@ -102,7 +155,7 @@ const Community = () => {
       setFormData({ ...formData, text: "", image: null });
       setAudioURL(null);
     } catch (err) {
-      alert("Error saving post!");
+      alert(t.saveError);
     }
   };
 
@@ -142,12 +195,12 @@ const Community = () => {
 
   
   const deletePost = async (postId) => {
-    if (window.confirm("ఈ పోస్ట్‌ను శాశ్వతంగా డిలీట్ చేయాలా?")) {
+    if (window.confirm(t.deleteConfirm)) {
       try {
         await axios.delete(`${API_URL}/${postId}`);
         setPosts(posts.filter(p => p._id !== postId));
       } catch (err) {
-        alert("Error deleting post!");
+        alert(t.deleteError);
       }
     }
   };
@@ -161,14 +214,25 @@ const Community = () => {
         <div style={styles.miniProfile}>
           <div style={styles.avatarLarge}><User size={24} color="#ffffff"/></div>
           <h3 style={styles.uName}>{currentUser}</h3>
-          <p style={styles.uSub}>Thimmayyapalem Member</p>
-          <button onClick={() => navigate('/')} style={styles.homeBtn}><Home size={14}/> Dashboard</button>
+          <p style={styles.uSub}>{formData.village ? `${formData.village} Member` : t.communityMember}</p>
+          <input
+            type="text"
+            placeholder={t.villagePlaceholder}
+            value={formData.village}
+            onChange={(e) => {
+              const village = e.target.value;
+              setFormData({ ...formData, village });
+              localStorage.setItem('currentVillage', village);
+            }}
+            style={styles.villageInput}
+          />
+          <button onClick={() => navigate('/')} style={styles.homeBtn}><Home size={14}/> {t.dashboard}</button>
         </div>
 
         {/* 2. Wide Input Box */}
         <div style={styles.inputCard}>
           <textarea 
-            placeholder="Hi everyone, let's discuss about farming today..." 
+            placeholder={t.placeholder} 
             style={styles.mainTextArea} 
             value={formData.text} 
             onChange={(e)=>setFormData({...formData, text: e.target.value})}
@@ -182,14 +246,14 @@ const Community = () => {
                 {formData.image && <div style={styles.smallPrev}><img src={formData.image} style={styles.fillImg} alt="p"/><XCircle size={10} style={styles.absDel} onClick={()=>setFormData({...formData, image:null})}/></div>}
                 {audioURL && <div style={styles.smallPrev}><Volume2 size={12} color="#10b981"/><XCircle size={10} style={styles.absDel} onClick={()=>setAudioURL(null)}/></div>}
              </div>
-             <button onClick={handlePostSubmit} style={styles.postBtn}><Send size={14}/> Share Now</button>
+             <button onClick={handlePostSubmit} style={styles.postBtn}><Send size={14}/> {t.shareNow}</button>
           </div>
           <input type="file" ref={fileInputRef} hidden onChange={handleImageUpload} accept="image/*" />
         </div>
 
         {/* 3. Members Box */}
         <div style={styles.suggestCard}>
-          <h4 style={styles.cardTitle}>Village Members</h4>
+          <h4 style={styles.cardTitle}>{t.villageMembers}</h4>
           <div style={styles.suggestList}>
             {[ {id:1, n:"V. Srinivasarao"}, {id:2, n:"V. Subbarao"}, {id:3, n:"V. Renu"} ].map(u => (
               <div key={u.id} style={styles.miniFollowRow}>
@@ -209,13 +273,16 @@ const Community = () => {
 
       {/* Post Feed */}
       <div style={styles.feedWrapper}>
-        <h2 style={styles.feedHeading}>Thimmayyapalem <span style={{color:'#10b981'}}>Feed</span></h2>
+        <h2 style={styles.feedHeading}>{t.communityFeed}</h2>
         <main style={styles.feedGrid}>
           {posts.map(post => (
             <div key={post._id} style={styles.postCard}>
               <div style={styles.postHeader}>
                 <div style={styles.avatarSm}><User size={12} color="white"/></div>
-                <div style={{flex:1}}><p style={styles.pUserName}>{post.user} <BadgeCheck size={12} color="#10b981"/></p><p style={styles.pMeta}>{post.time} • Local Update</p></div>
+                <div style={{flex:1}}>
+                  <p style={styles.pUserName}>{post.user} <BadgeCheck size={12} color="#10b981"/></p>
+                  <p style={styles.pMeta}>{post.time} • {post.village || 'Community'} • {t.localUpdate}</p>
+                </div>
                 <Trash2 size={14} color="#cbd5e1" onClick={() => deletePost(post._id)} style={{cursor:'pointer'}}/>
               </div>
               <p style={styles.postText}>{post.content}</p>
@@ -234,7 +301,7 @@ const Community = () => {
                 <button style={styles.iBtn} onClick={() => {
                   setPosts(posts.map(p => p._id === post._id ? {...p, showReplyBox: !p.showReplyBox} : p));
                 }}>
-                  <MessageCircle size={16}/> {post.comments?.length || 0} Comments
+                  <MessageCircle size={16}/> {post.comments?.length || 0} {t.comments}
                 </button>
               </div>
 
@@ -276,7 +343,8 @@ const styles = {
   miniProfile: { background: '#ffffff', borderRadius: '16px', padding: '24px', textAlign: 'center', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' },
   avatarLarge: { width: '64px', height: '64px', borderRadius: '50%', background: '#10b981', margin: '0 auto 16px', display: 'flex', alignItems: 'center', justifyContent: 'center' },
   uName: { fontSize: '18px', fontWeight: '700', margin: '0 0 4px', color: '#1e293b' },
-  uSub: { fontSize: '13px', color: '#64748b', marginBottom: '20px' },
+  uSub: { fontSize: '13px', color: '#64748b', marginBottom: '12px' },
+  villageInput: { width: '100%', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '10px 12px', marginBottom: '12px', fontSize: '13px', outline: 'none' },
   homeBtn: { background: '#f1f5f9', color: '#475569', border: '1px solid #e2e8f0', padding: '10px 16px', borderRadius: '10px', cursor: 'pointer', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px', margin: '0 auto' },
   inputCard: { background: '#ffffff', borderRadius: '16px', padding: '24px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' },
   mainTextArea: { width: '100%', border: 'none', outline: 'none', fontSize: '16px', minHeight: '80px', resize: 'none', color: '#1e293b', lineHeight: '1.6' },
