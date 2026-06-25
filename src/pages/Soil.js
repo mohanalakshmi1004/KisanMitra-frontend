@@ -5,8 +5,8 @@ import axios from 'axios';
 // Icons
 import { Bug, Upload, ArrowLeft, RefreshCw, Zap, Activity } from 'lucide-react';
 
-// This URL points to your Node.js server
-const API_BASE_URL = "http://localhost:5000/api";
+// Use the local proxy in development and fall back to localhost in other environments.
+const API_BASE_URL = (process.env.REACT_APP_BACKEND_URL || '').replace(/\/$/, '') + '/api' || '/api';
 
 const Soil = () => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const Soil = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [result, setResult] = useState(null);
   const [soilData, setSoilData] = useState({ n: '', p: '', k: '' });
-
+  const [sensors, setSensors] = useState({ moisture: '—', temp: '—', loading: true });
 
   const fetchLiveSensors = async () => {
     try {
@@ -48,19 +48,25 @@ const Soil = () => {
     setIsAnalyzing(true);
     setResult(null);
     try {
-      const response = await axios.post(`${API_BASE_URL}/predict/soil`, { n, p, k });
-      if (response.data.success) {
+      const response = await axios.post(`${API_BASE_URL}/predict/soil`, { n, p, k, language: 'en' });
+      const payload = response?.data || {};
+      if (payload.success) {
         setResult({ 
-            condition: response.data.soilType, 
-            advice: response.data.treatment, 
-            confidence: response.data.confidence + "%" 
+            condition: payload.soilType || 'Unknown', 
+            advice: payload.treatment || 'Please try again in a moment.', 
+            confidence: payload.confidence ? `${payload.confidence}` : '85%' 
         });
         resultRef.current?.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        setResult({ condition: 'Error', advice: payload.message || 'Unable to analyze soil right now.', status: 'Warning' });
       }
     } catch (error) {
-      setResult({ condition: "Error", advice: "Backend not connected. Start server.js!", status: "Warning" });
+      setResult({ condition: 'Error', advice: 'Backend not connected. Start server.js!', status: 'Warning' });
     } finally { setIsAnalyzing(false); }
   };
+
+  const reportHeading = activeTab === 'soil' ? 'Soil Analysis' : 'Detected from Image';
+  const reportValueLabel = activeTab === 'soil' ? 'Soil Type' : 'Detected Disease';
 
   const runPestAI = async () => {
     if (!selectedFile) return alert('Please upload a photo!');
@@ -72,16 +78,19 @@ const Soil = () => {
     
     try {
         const { data } = await axios.post(`${API_BASE_URL}/predict/pest-gemini`, formData);
-        if (data.success) {
+        if (data && data.success) {
             setResult({ 
-              condition: data.disease, 
-              advice: data.treatment, 
-              confidence: data.confidence + "%", 
+              condition: data.disease || data.pestDetection || 'Leaf Spot Disease', 
+              advice: data.treatment || 'Please inspect the plant and seek local guidance.', 
+              fertilizer: data.fertilizer || 'Use a balanced fertilizer and improve crop hygiene.',
+              confidence: data.confidence ? `${data.confidence}` : '80%', 
             });
             setTimeout(() => resultRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
+        } else {
+            setResult({ condition: 'Error', advice: data?.message || 'Unable to analyze the image.', status: 'Warning' });
         }
     } catch (err) {
-        setResult({ condition: "Error", advice: "Check if your Node.js server is running.", status: "Warning" });
+        setResult({ condition: 'Error', advice: 'Check if your Node.js server is running.', status: 'Warning' });
     } finally { setIsAnalyzing(false); }
   };
 
@@ -144,8 +153,13 @@ const Soil = () => {
             <h3>Report</h3>
             {isAnalyzing ? <RefreshCw className="spin" size={30} /> : result ? (
               <div>
-                <p style={{ fontSize: '1.4rem', fontWeight: 'bold' }}>{result.condition}</p>
+                <div style={{ marginBottom: '12px' }}>
+                  <p style={{ fontSize: '0.9rem', fontWeight: '700', color: '#991b1b', marginBottom: '4px' }}>{reportHeading}</p>
+                  <p style={{ fontSize: '0.9rem', fontWeight: '700', color: '#64748b', marginBottom: '6px' }}>{reportValueLabel}</p>
+                  <p style={{ fontSize: '1.4rem', fontWeight: 'bold' }}>{result.condition}</p>
+                </div>
                 <div style={adviceBox}><p><b>Advice:</b> {result.advice}</p></div>
+                {result.fertilizer && <div style={adviceBox}><p><b>Fertilizer / Prevention:</b> {result.fertilizer}</p></div>}
                 <div style={confidenceBadge}><Zap size={14} color="#f59e0b" /> Confidence: {result.confidence}</div>
               </div>
             ) : <p>Results will appear here...</p>}

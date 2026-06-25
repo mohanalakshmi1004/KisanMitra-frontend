@@ -19,7 +19,7 @@ const Community = () => {
   const [following, setFollowing] = useState([]);
   const [replyText, setReplyText] = useState({});
 
-  const currentUser = "V. Eswararao";
+  const currentUser = localStorage.getItem('currentUser') || '';
  
   const API_URL = `${process.env.REACT_APP_BACKEND_URL}/api/community/posts`;
   useEffect(() => {

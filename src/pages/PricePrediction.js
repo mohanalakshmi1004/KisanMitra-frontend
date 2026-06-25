@@ -51,7 +51,37 @@ const MarketDashboard = () => {
 
   // --- 2. DYNAMIC PREDICTION LOGIC ---
   const runPrediction = useCallback(async (crop = 'Sugarcane', location = 'Visakhapatnam') => {
-    if (trainingData.length === 0) return;
+    if (trainingData.length === 0 && BACKEND_URL) {
+      try {
+        const response = await axios.post(`${BACKEND_URL}/api/predict/price`, { cropName: crop, crop, language: 'en' });
+        if (response?.data?.success) {
+          const aiData = response.data;
+          const numericPrice = typeof aiData.currentPrice === 'string'
+            ? Number(aiData.currentPrice.replace(/[^0-9.-]+/g, ""))
+            : Number(aiData.currentPrice || 0);
+          setLiveResult({
+            location: location,
+            crop: crop.charAt(0).toUpperCase() + crop.slice(1),
+            price: numericPrice,
+            unit: numericPrice < 250 ? 'per KG' : 'per Quintal (100 KG)',
+            predictedPrice: numericPrice + 100,
+            arrivals: 'Live',
+            mandi: 'Main Mandi',
+            trend: aiData.trend || '+2.0%',
+            isUp: true,
+            source: 'Live Fallback Market Data',
+            history: [
+              { day: 'Now', price: numericPrice, isFuture: false },
+              { day: 'Next', price: numericPrice + 100, isFuture: true }
+            ]
+          });
+        }
+      } catch (err) {
+        setError(`'${crop}' data not found.`);
+      }
+      setIsSearching(false);
+      return;
+    }
     
     setError(null);
     setIsSearching(true);

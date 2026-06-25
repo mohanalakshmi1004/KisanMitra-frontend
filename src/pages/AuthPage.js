@@ -30,7 +30,9 @@ const AuthPage = () => {
       if (response.ok) {
         if (isLogin) {
           setMessage({ text: 'లాగిన్ సక్సెస్! హోమ్ పేజీకి వెళ్తున్నాము...', type: 'success' });
-          localStorage.setItem('token', data.token); 
+          localStorage.setItem('token', data.token);
+          const userName = (data.user?.name || formData.identifier || '').trim();
+          localStorage.setItem('currentUser', userName);
           setTimeout(() => navigate('/'), 2000);
         } else {
           setMessage({ text: data.message, type: 'success' });
