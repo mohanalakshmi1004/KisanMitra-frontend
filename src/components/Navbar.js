@@ -40,6 +40,8 @@ const Navbar = () => {
     { name: 'Insurance', path: '/insurance' }
   ];
 
+  const visibleLinks = token ? navLinks : navLinks.filter((link) => link.path === '/');
+
   return (
     <nav style={styles.nav}>
       {/* 🟢 Logo */}
@@ -51,7 +53,7 @@ const Navbar = () => {
 
       {/* center links */}
       <div style={styles.linksContainer}>
-        {token && navLinks.map((link) => (
+        {visibleLinks.map((link) => (
           <Link 
             key={link.path}
             to={link.path}

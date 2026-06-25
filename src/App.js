@@ -20,7 +20,7 @@ const Trainer = lazy(() => import("./pages/Trainer"));
 
 
 const ProtectedRoute = ({ children }) => {
-  const token = localStorage.getItem("token");
+  const token = typeof window !== 'undefined' ? localStorage.getItem("token") : null;
   return token ? children : <Navigate to="/auth" replace />;
 };
 
@@ -33,6 +33,7 @@ const PageLoader = () => (
 
 const AppRoutes = () => {
   const location = useLocation();
+  const token = typeof window !== 'undefined' ? localStorage.getItem("token") : null;
 
   return (
     <div className="main-content" id="app-root-container">
@@ -44,7 +45,6 @@ const AppRoutes = () => {
           <Route path="/login" element={<AuthPage />} />
           <Route path="/signup" element={<AuthPage />} />
 
-        
           <Route path="/" element={<Home />} />
           <Route path="/weather" element={<ProtectedRoute><Weather /></ProtectedRoute>} />
           <Route path="/crop" element={<ProtectedRoute><Crop /></ProtectedRoute>} />
