@@ -3,13 +3,13 @@
   justify-content: space-between;
   align-items: center;
   background-color: #2e7d32;
-  padding: 15px 5%; /* ఇరుపక్కల కొంచెం గ్యాప్ కోసం 5% ఇచ్చాను */
+  padding: 15px 5%; 
   color: white;
-  width: 100%; /* ఇది కచ్చితంగా ఉండాలి, అప్పుడే Navbar ఫుల్ విడ్త్ వస్తుంది */
+  width: 100%; 
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-sizing: border-box; /* ప్యాడింగ్ వల్ల విడ్త్ పెరగకుండా చూస్తుంది */
+  box-sizing: border-box; 
 }
 
 .logo {
@@ -26,7 +26,7 @@
 }
 
 .links a {
-  margin-left: 20px; /* లింక్స్ మధ్య గ్యాప్ */
+  margin-left: 20px; 
   text-decoration: none;
   color: white;
   font-weight: 500;
@@ -34,7 +34,7 @@
 }
 
 .links a:hover {
-  color: #a5d6a7; /* హోవర్ చేసినప్పుడు లైట్ గ్రీన్ */
+  color: #a5d6a7; 
 }
 body, html, #root {
   margin: 0;
@@ -43,14 +43,14 @@ body, html, #root {
   width: 100%;
   height: 100%;
 }
-/* RESET (important) */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* BODY */
+
 body, html, #root {
   margin: 0;
   padding: 0;
@@ -59,7 +59,7 @@ body, html, #root {
   height: 100%;
 }
 
-/* NAVBAR */
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -73,7 +73,7 @@ body, html, #root {
   z-index: 1000;
   box-sizing: border-box;
 
-  margin-bottom: 0; /* 🔥 gap remove */
+  margin-bottom: 0; 
 }
 
 /* LOGO */
@@ -103,14 +103,13 @@ body, html, #root {
   color: #a5d6a7;
 }
 
-/* 🔥 HERO / IMAGE FIX (VERY IMPORTANT) */
+
 .hero, .banner, section {
   margin-top: 0 !important;
   padding-top: 0 !important;
 }
 
-/* 🔥 IMAGE GAP REMOVE */
 img {
   display: block;
-  width: 100%; /* optional but better */
+  width: 100%; 
 }

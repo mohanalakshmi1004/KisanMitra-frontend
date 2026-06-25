@@ -70,10 +70,10 @@ const Schemes = () => {
     { id: 4, title: "Farm Machinery Subsidy", desc: "40-50% subsidy on Tractors and tools.", lastDate: "20 June", icon: <Tractor size={24} color="#f59e0b"/>, link: "https://agrimachinery.nic.in/", keywords: "tractor tools machinery subsidy" }
   ];
 
-  // 🟢 స్మార్ట్ ఫిల్టర్ లాజిక్: టైటిల్ లేదా కీవర్డ్స్ లో ఏ ఒక్క పదం మ్యాచ్ అయినా చూపిస్తుంది
+  
   const filtered = allSchemes.filter(s => {
     const search = searchTerm.toLowerCase();
-    const words = search.split(' '); // సెర్చ్ ని ముక్కలుగా చేయడం
+    const words = search.split(' '); 
     
     return words.some(word => 
       s.title.toLowerCase().includes(word) || 

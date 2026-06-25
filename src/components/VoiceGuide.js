@@ -7,8 +7,6 @@ const VoiceGuide = () => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [voices, setVoices] = useState([]);
   const lastSpokenText = useRef(""); 
-
-  // 1. వాయిస్‌లను లోడ్ చేయడం
   useEffect(() => {
     const loadVoices = () => {
       const v = window.speechSynthesis.getVoices();
@@ -58,7 +56,6 @@ const VoiceGuide = () => {
     window.speechSynthesis.speak(utterance);
   }, [voices, getSelectedLang]);
 
-  // 🎯 ఫిక్స్: MutationObserver తీసేసి 'voice-result' ఈవెంట్ వింటున్నాం
   useEffect(() => {
     const handleVoiceEvent = (event) => {
       const textToSpeak = event.detail.text;
@@ -70,7 +67,7 @@ const VoiceGuide = () => {
       }
     };
 
-    // Soil.js నుండి వచ్చే ఈవెంట్ ని వినడం
+    
     window.addEventListener('voice-result', handleVoiceEvent);
     
     return () => {

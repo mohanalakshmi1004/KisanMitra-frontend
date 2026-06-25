@@ -447,9 +447,7 @@ body {
   color: #2e7d32;
 }
 
-/* =========================================
-   WEATHER COMPONENT STYLING
-   ========================================= */
+
 .weather-wrapper {
   display: flex;
   flex-direction: column;
@@ -631,9 +629,7 @@ body {
 .loading-text { color: #2e7d32; font-weight: bold; margin-top: 20px;}
 .error-text { color: #d32f2f; margin-top: 20px; font-weight: bold;}
 
-/* =========================================
-   CROP PREDICTION COMPONENT STYLING
-   ========================================= */
+
 .crop-form {
   display: grid;
   grid-template-columns: 1fr 1fr; 
@@ -727,9 +723,7 @@ body {
 .status-card.low { background: #ffecb3; color: #ff6f00; }
 .status-card.info { background: #e3f2fd; color: #01579b; }
 
-/* =========================================
-   ANIMATIONS
-   ========================================= */
+
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
@@ -740,9 +734,7 @@ body {
   to { opacity: 1; transform: translateX(0); }
 }
 
-/* =========================================
-   MEDIA QUERIES (Mobile Responsive)
-   ========================================= */
+
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
@@ -781,9 +773,9 @@ body {
     grid-column: span 1;
   }
 }
-/* Google Translate బటన్ నవబార్ లోపలే ఉండటానికి ఇది ముఖ్యం */
+
 #google_translate_element {
-  position: static !important; /* ఎగిరి వేరే పేజీలోకి వెళ్లకుండా ఆపుతుంది */
+  position: static !important; 
   display: inline-block;
 }
 
@@ -799,7 +791,7 @@ body {
   outline: none;
 }
 
-/* చెత్త (Powered by Google) ని దాచేయడం */
+
 .goog-te-gadget {
   color: transparent !important;
   font-size: 0px !important;
@@ -813,7 +805,7 @@ body {
 body {
   top: 0px !important;
 }
-/* 🔥 remove gap below navbar */
+
 .main-content {
   margin-top: -29px;
 }

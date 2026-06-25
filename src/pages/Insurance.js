@@ -12,7 +12,7 @@ const Insurance = () => {
   const [chartData, setChartData] = useState([]);
   const [weatherCondition, setWeatherCondition] = useState('Normal');
 
-  // ✅ API Key from .env
+  
   const WEATHER_API_KEY = process.env.REACT_APP_OPENWEATHER_API_KEY;
 
   const isAP = selectedState === 'Andhra Pradesh';

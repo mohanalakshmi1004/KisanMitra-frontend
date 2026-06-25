@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-// ✅ ల్యాగ్ తగ్గించడానికి ఆప్టిమైజ్ చేసిన ఇంపోర్ట్స్
+
 import Sprout from 'lucide-react/dist/esm/icons/sprout';
 import Leaf from 'lucide-react/dist/esm/icons/leaf';
 import Target from 'lucide-react/dist/esm/icons/target';
@@ -19,11 +19,11 @@ const Crop = () => {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // ENV Variables - ఒకవేళ ఇవి undefined అయితే డైరెక్ట్ URL వాడుకుంటుంది
+ 
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
   const WEATHER_API_KEY = process.env.REACT_APP_OPENWEATHER_API_KEY;
 
-  // ✅ ప్రస్తుత భాషను గుర్తించే ఫంక్షన్ (Consistency కోసం)
+ 
   const getCurrentLanguage = () => {
     const cookie = document.cookie.split('; ').find(row => row.startsWith('googtrans='));
     return cookie ? cookie.split('/').pop() : "te";
@@ -67,8 +67,7 @@ const Crop = () => {
       const weatherRes = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${userCity}&appid=${WEATHER_API_KEY}&units=metric`);
       const { temp, humidity } = weatherRes.data.main;
 
-      // 2. AI Prediction Call
-      // 🔍 DEBUG: ఇక్కడ console log పెట్టి URL ని చెక్ చెయ్యి
+    
       const apiPath = `${BACKEND_URL}/api/predict/crop`;
       console.log("Calling API:", apiPath);
 

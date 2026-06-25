@@ -13,7 +13,7 @@ const Weather = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // ✅ API Key ని .env నుండి తీసుకుంటున్నాము
+
   const API_KEY = process.env.REACT_APP_OPENWEATHER_API_KEY;
 
   const fetchByCoords = useCallback(async (lat, lon) => {
@@ -29,7 +29,7 @@ const Weather = () => {
     } finally {
       setLoading(false);
     }
-  }, [API_KEY]); // API_KEY dependency యాడ్ చేశాను
+  }, [API_KEY]); 
 
   const getMyLocation = useCallback(() => {
     setLoading(true);
@@ -65,7 +65,7 @@ const Weather = () => {
     } finally {
       setLoading(false);
     }
-  }, [API_KEY]); // API_KEY dependency యాడ్ చేశాను
+  }, [API_KEY]); 
 
   useEffect(() => {
     const savedCity = localStorage.getItem("city");

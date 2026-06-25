@@ -14,11 +14,11 @@ const Trainer = () => {
         const data = results.data.filter(r => r['sssyName.stateName'] && r['cropName'] && r['premiumRate']);
         setStatus("2. AI is studying ALL crops in your CSV... wait 15 seconds.");
 
-        // --- DYNAMIC CROP LOADING ---
+     
         const uniqueStates = [...new Set(data.map(item => item['sssyName.stateName']))];
         const uniqueCrops = [...new Set(data.map(item => item['cropName']))];
 
-        // Save these lists to browser memory so Dashboard can see them
+       
         localStorage.setItem('ai_states', JSON.stringify(uniqueStates));
         localStorage.setItem('ai_crops', JSON.stringify(uniqueCrops));
 
